@@ -1,0 +1,116 @@
+<html>
+    <head>
+        <title>
+            Cryptography - Kuri
+        </title>
+
+        <style>
+            #title{
+                text-align: center;
+                font-family: 'Courier New', Courier, monospace;
+                font-size: 23;
+            }
+            #inputText{
+                width : 50%;
+            }
+            #shifter{
+                width : 5%;
+            }
+            #holder{
+                width:100%;
+                text-align: center;
+            }
+            .justtext{
+                text-indent: 17.5%;
+            }
+            #result{
+                text-indent: 17.5%;
+            }
+        </style>
+    </head>
+    <body>
+        <p id="title">CAESAR CHIPER</p>
+        <div id="holder">
+            <input type="text" id="inputText" name="textbox1" onclick="this.value = '' "/>
+            <input type="number" id="shifter" name="shiftbox" onclick="this.value = '' "/>
+            <button onclick="decrypt();">Decrypt</button>
+            <button onclick="encrypt();">Encrypt</button>
+        </div>
+        <br>
+        <p class = "justtext">You needn't to fill the number if you want to decrypt. You must fill a number to encrypt</p>
+        <br>
+        <p class = "justtext">RESULT :</p>
+        <p class ="justText" id = "result"></p>
+        
+        <script>
+            document.getElementById('inputText').value = 'Input text here';
+            document.getElementById('shifter').value = 1;
+
+            function encrypt(){
+                var sentence = document.getElementById('inputText').value;
+                var shifting = document.getElementById('shifter').value;
+                
+                var output = "";
+                var i = 0;
+                while(i < sentence.length){
+                    var chara = sentence[i];
+                    var ccode = sentence.charCodeAt(i);
+                    
+                    if(chara == ' '){
+                        output += chara;
+                    }
+                    else{
+                        if(ccode >= 65 && ccode <= 90){
+                            
+                            chara = String.fromCharCode((+ccode + +shifting - 65) % 26 + 65);
+                        }
+                        else if(ccode >= 97 && ccode <= 122){
+
+                            chara = String.fromCharCode((+ccode + +shifting - 97) % 26 + 97);
+                        }
+
+                        output += chara;
+                    }                    
+                    i++;
+
+                }
+
+                document.getElementById('result').innerHTML = output;
+            }
+
+            function decrypt(){
+                var sentence = document.getElementById('inputText').value;
+                var shifting = document.getElementById('shifter').value;
+                
+                var output = "";
+                for(var j = 1; j <=25; j++){
+                    var i = 0;
+                    while(i < sentence.length){
+                        var chara = sentence[i];
+                        var ccode = sentence.charCodeAt(i);
+                        
+                        if(chara == ' '){
+                            output += chara;
+                        }
+                        else{
+                            if(ccode >= 65 && ccode <= 90){
+                                
+                                chara = String.fromCharCode((+ccode + j - 65) % 26 + 65);
+                            }
+                            else if(ccode >= 97 && ccode <= 122){
+
+                                chara = String.fromCharCode((+ccode + j - 97) % 26 + 97);
+                            }
+
+                            output += chara;
+                        }                    
+                        i++;
+
+                    }
+
+                document.getElementById("result").innerHTML = output + "<br>";
+            }
+        }
+        </script>
+    </body>
+</html>
