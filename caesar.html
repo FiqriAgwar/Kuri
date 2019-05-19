@@ -31,20 +31,18 @@
     <body>
         <p id="title">CAESAR CHIPER</p>
         <div id="holder">
-            <input type="text" id="inputText" name="textbox1" onclick="this.value = '' "/>
-            <input type="number" id="shifter" name="shiftbox" onclick="this.value = '' "/>
+            <input type="text" id="inputText" name="textbox1" />
+            <input type="number" id="shifter" name="shiftbox" />
             <button onclick="decrypt();">Decrypt</button>
             <button onclick="encrypt();">Encrypt</button>
         </div>
         <br>
-        <p class = "justtext">You needn't to fill the number if you want to decrypt. You must fill a number to encrypt</p>
+        <!-- <p class = "justtext">You needn't to fill the number if you want to decrypt. You must fill a number to encrypt</p> -->
         <br>
         <p class = "justtext">RESULT :</p>
         <p class ="justText" id = "result"></p>
         
         <script>
-            document.getElementById('inputText').value = 'Input text here';
-            document.getElementById('shifter').value = 1;
 
             function encrypt(){
                 var sentence = document.getElementById('inputText').value;
@@ -83,7 +81,7 @@
                 var shifting = document.getElementById('shifter').value;
                 
                 var output = "";
-                for(var j = 1; j <=25; j++){
+                
                     var i = 0;
                     while(i < sentence.length){
                         var chara = sentence[i];
@@ -94,12 +92,21 @@
                         }
                         else{
                             if(ccode >= 65 && ccode <= 90){
+                                if(+ccode - +shifting - 65 < 0){
+                                    chara = String.fromCharCode(90 - (+ccode - +shifting - 65 + 1));
+                                }
+                                else{
+                                    chara = String.fromCharCode((+ccode - +shifting - 65) % 26 + 65);
+                                }
                                 
-                                chara = String.fromCharCode((+ccode + j - 65) % 26 + 65);
                             }
                             else if(ccode >= 97 && ccode <= 122){
-
-                                chara = String.fromCharCode((+ccode + j - 97) % 26 + 97);
+                                if(+ccode - +shifting - 97 < 0){
+                                    chara = String.fromCharCode(122 + (+ccode - +shifting - 97 + 1));
+                                }
+                                else{
+                                    chara = String.fromCharCode((+ccode - +shifting - 97) % 26 + 97);
+                                }
                             }
 
                             output += chara;
@@ -108,9 +115,9 @@
 
                     }
 
-                document.getElementById("result").innerHTML = output + "<br>";
+                document.getElementById("result").innerHTML = output;
+            
             }
-        }
         </script>
     </body>
 </html>

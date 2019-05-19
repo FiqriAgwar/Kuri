@@ -1,0 +1,148 @@
+<html>
+    <head>
+        <title>
+            Cryptography - Kuri
+        </title>
+
+        <style>
+            #title{
+                text-align: center;
+                font-family: 'Courier New', Courier, monospace;
+                font-size: 23;
+            }
+            #inputText{
+                width : 50%;
+            }
+            #shifter{
+                width : 5%;
+            }
+            #holder{
+                width:100%;
+                text-align: center;
+            }
+            .justtext{
+                text-indent: 17.5%;
+            }
+            #result{
+                text-indent: 17.5%;
+            }
+        </style>
+    </head>
+    <body>
+        <p id="title">VIGENERE CHIPER</p>
+        <div id="holder">
+            <input type="text" id="inputText" name="textbox1" />
+            <input type="text" id="shifter" name="shiftbox" />
+            <button onclick="decrypt();">Decrypt</button>
+            <button onclick="encrypt();">Encrypt</button>
+        </div>
+        <br>
+        <!-- <p class = "justtext">You needn't to fill the number if you want to decrypt. You must fill a number to encrypt</p> -->
+        <br>
+        <p class = "justtext">RESULT :</p>
+        <p class ="justText" id = "result"></p>
+        
+        <script>
+            function encrypt(){
+                var sentence = document.getElementById('inputText').value;
+                var shifting = document.getElementById('shifter').value;
+
+                var output = "";
+
+                var i = 0;
+                var j = 0;
+                while(i < sentence.length){
+                    var chara = sentence[i];
+                    var chars = shifting[j % shifting.length];
+
+                    var ccode = sentence.charCodeAt(i);
+                    var scode = shifting.charCodeAt(j % shifting.length);
+                    
+                    if(ccode >= 65 && ccode <= 90){
+                        scode = +scode - 65;
+                    }
+                    else if(ccode >= 97 && ccode <= 122){
+                        scode = +scode - 97;
+                    }
+
+                    
+
+                    if(chara == ' '){
+                        output += chara;
+                    }
+                    else{
+                        if(ccode >= 65 && ccode <= 90){
+                            
+                            chara = String.fromCharCode((+ccode + +scode - 65) % 26 + 65);
+                        }
+                        else if(ccode >= 97 && ccode <= 122){
+
+                            chara = String.fromCharCode((+ccode + +scode - 97) % 26 + 97);
+                        }
+
+                        output += chara;
+                        j++;
+                    }
+                    i++;
+                }
+
+                document.getElementById('result').innerHTML = output;
+            }
+
+            function decrypt(){
+                var sentence = document.getElementById('inputText').value;
+                var shifting = document.getElementById('shifter').value;
+
+                var output = "";
+
+                var i = 0;
+                var j = 0;
+                while(i < sentence.length){
+                    var chara = sentence[i];
+                    var chars = shifting[j % shifting.length];
+
+                    var ccode = sentence.charCodeAt(i);
+                    var scode = shifting.charCodeAt(j % shifting.length);
+                    
+                    if(ccode >= 65 && ccode <= 90){
+                        scode = +scode - 65;
+                    }
+                    else if(ccode >= 97 && ccode <= 122){
+                        scode = +scode - 97;
+                    }
+
+                    
+
+                    if(chara == ' '){
+                        output += chara;
+                    }
+                    else{
+                        if(ccode >= 65 && ccode <= 90){
+                            if(+ccode - +scode - 65 < 0){
+                                chara = String.fromCharCode(90 - (+ccode - +scode - 65 + 1));
+                            }
+                            else{
+                                chara = String.fromCharCode((+ccode - +scode - 65) % 26 + 65);
+                            }
+                        }
+                        else if(ccode >= 97 && ccode <= 122){
+                            
+                            if(+ccode - +scode - 97 < 0){
+                                chara = String.fromCharCode(122 + (+ccode - +scode - 97 + 1));
+                            }
+                            else{
+                                chara = String.fromCharCode((+ccode - +scode - 97) % 26 + 97);
+                            }
+                        }
+
+                        output += chara;
+                        j++;
+                    }
+                    i++;
+                }
+
+                document.getElementById('result').innerHTML = output;
+            }
+        </script>
+    </body>
+</html>
